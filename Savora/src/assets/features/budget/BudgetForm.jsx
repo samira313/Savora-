@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setBudget } from "./budgetSlice";
 
 
 function BudgetForm() {
+const dispatch = useDispatch();    
 const [amount, setAmount] = useState("");
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("budget submitted" , amount);
+   dispatch(setBudget(Number(amount))); //send amount to Redux
     setAmount("");
 
 }
