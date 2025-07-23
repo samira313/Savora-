@@ -5,11 +5,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const budgetSlice = createSlice({
     name: 'budget',
     initialState: {
-        amount: 0,
+amount: 0,
     },
     reducers: {
         setBudget: (state, action) => {
-            state.amount = action.payload;
+            state.amount = Number(action.payload);
         }
     }
 });

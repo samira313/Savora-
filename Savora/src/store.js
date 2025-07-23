@@ -3,9 +3,11 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import budgetReducer from './assets/features/budget/budgetSlice';
+import expenseReducer from './assets/features/expenses/expenseSlice'
 
 export const store = configureStore({
     reducer: {
         budget: budgetReducer,
+        expenses: expenseReducer,
     }
-})
+});

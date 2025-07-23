@@ -14,7 +14,6 @@ const handleSubmit = (e) => {
 
 }
 
-
 return (
     <form onSubmit={handleSubmit}>
         <label htmlFor="budget">Set your budget:</label>
