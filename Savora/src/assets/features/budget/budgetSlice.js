@@ -1,18 +1,21 @@
-// this file defines and manages the state for the user's budget.
-// and autimatically generates a reducer using redux.toolkit createSlice.
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+const savedBudget = localStorage.getItem("budget");
+
+const initialState = {
+  amount: savedBudget ? JSON.parse(savedBudget) : 0,
+};
 
 const budgetSlice = createSlice({
-    name: 'budget',
-    initialState: {
-amount: 0,
+  name: "budget",
+  initialState,
+  reducers: {
+    setBudget: (state, action) => {
+      state.amount = action.payload;
+      localStorage.setItem("budget", JSON.stringify(action.payload));
     },
-    reducers: {
-        setBudget: (state, action) => {
-            state.amount = Number(action.payload);
-        }
-    }
+  },
 });
- 
+
 export const { setBudget } = budgetSlice.actions;
 export default budgetSlice.reducer;
