@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { selectTotalExpenses } from "./assets/features/expenses/expenseSlice";
-import './App.css'
+import './styles/AppStyles.css';
 import BudgetForm from './assets/features/budget/budgetForm';
 import BudgetList from './assets/features/budget/BudgetList';
 import ExpenseForm from './assets/features/expenses/ExpenseForm';
