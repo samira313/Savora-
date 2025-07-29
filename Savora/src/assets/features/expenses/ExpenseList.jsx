@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { deleteExpense } from "./expenseSlice";
-function ExpenseList() {
+function ExpenseList({ setEditingExpense }) {
     const expenses = useSelector((state) => state.expenses.items);
     const dispatch = useDispatch();
 
@@ -13,7 +13,9 @@ function ExpenseList() {
                 {expenses.map((expense) => 
                 <li key={expense.id}>
                     {expense.title} - €{expense.amount}
+                    <button onClick={() => setEditingExpense(expense)}>✏️</button>
                     <button onClick={() => dispatch(deleteExpense(expense.id))}>❌</button>
+                    
                 </li>
             )}
             </ul>
