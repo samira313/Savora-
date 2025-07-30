@@ -1,16 +1,37 @@
-import React from "react";
+import { useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { deleteExpense } from "./expenseSlice";
 function ExpenseList({ setEditingExpense }) {
     const expenses = useSelector((state) => state.expenses.items);
     const dispatch = useDispatch();
+    const [searchTerm, setSearchTerm] = useState("");
+    
+    // Save the search term to local storage whenever it changes
+    useEffect(() => {
+      localStorage.setItem("searchTerm", searchTerm);
+    }, [searchTerm]);
+
+    // Load the saved search term from local storage when the component mounts
+    useEffect(() => {
+      const saved = localStorage.getItem("searchTerm");
+      if (saved) setSearchTerm(saved);
+    }, [])
+    const filteredExpenses = expenses.filter(expense => 
+      expense.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
     return (
         <div>
+          <input
+          type="text"
+          placeholder="Search..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: "5px", marginBottom: "10px", width: "100%"}}
+          />
             <h3>Expenses</h3> 
             <ul>
-                {expenses.map((expense) => 
+                {filteredExpenses.map((expense) => 
                 <li key={expense.id}>
                     {expense.title} - €{expense.amount}
                     <button onClick={() => setEditingExpense(expense)}>✏️</button>
