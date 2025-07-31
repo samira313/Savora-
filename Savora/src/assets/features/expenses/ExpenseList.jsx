@@ -17,15 +17,25 @@ function ExpenseList({ setEditingExpense }) {
       const saved = localStorage.getItem("searchTerm");
       if (saved) setSearchTerm(saved);
     }, [])
-    const filteredExpenses = expenses.filter(expense => 
-      expense.title.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+
+    useEffect(() => {
+      localStorage.setItem("expenses", JSON.stringify(expenses))
+    }, [expenses])
+    
+   console.log(JSON.stringify(expenses, null, 2))
+    const filteredExpenses = expenses.filter(
+  (expense) =>
+    expense.title &&
+    expense.title.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
     return (
         <div>
           <input
           type="text"
           placeholder="Search..."
+           value={searchTerm} 
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ padding: "5px", marginBottom: "10px", width: "100%"}}
           />

@@ -6,6 +6,7 @@ function ExpenseForm({ editingExpense, setEditingExpense }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
+    const [category, setCategory] = useState(editingExpense?.category || "Food");
 
    
     useEffect(() => {
@@ -17,20 +18,28 @@ function ExpenseForm({ editingExpense, setEditingExpense }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+    if (!title.trim() || !amount) {
+            alert("Please enter title and amount");
+            return;
+          }
 
+      
         if (editingExpense) {
-            dispatch(editExpense({ id: editingExpense.id, title, amount: Number(amount) }));
+            dispatch(editExpense({ id: editingExpense.id, title, amount: Number(amount), category}));
             setEditingExpense(null);
         } else {
             dispatch(addExpense({
                 id: Date.now(),
                 title,
                 amount: Number(amount),
+                category
             }));
         }
 
         setTitle("");
         setAmount("");
+        setCategory("Food")
     };
 
     return (
@@ -44,6 +53,18 @@ function ExpenseForm({ editingExpense, setEditingExpense }) {
                     required
                 />
             </label>
+            {/* {dropdown} */}
+            <select 
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            >
+              <option value="Food">Food</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bills">Bills</option>
+              <option value="Other">Other</option>
+            </select>
+          
             <label>
                 Amount:
                 <input 

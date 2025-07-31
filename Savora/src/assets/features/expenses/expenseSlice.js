@@ -11,7 +11,12 @@ const expenseSlice = createSlice ({
     initialState,
     reducers: {
         addExpense: (state, action) => {
-            state.items.push(action.payload);
+            state.items.push({
+              id: Date.now(),
+              title: action.payload.title,
+              amount: action.payload.amount,
+              category: action.payload.category
+            });
             localStorage.setItem("expenses", JSON.stringify(state.items));
         },
         deleteExpense: (state, action) => {
@@ -23,10 +28,10 @@ const expenseSlice = createSlice ({
   localStorage.setItem("budget", JSON.stringify(action.payload)); 
 },
  editExpense: (state, action) => {
-            const { id, title, amount } = action.payload;
+            const { id, title, amount, category } = action.payload;
             const index = state.items.findIndex((expense) => expense.id === id);
             if (index !== -1) {
-                state.items[index] = { id, title, amount };
+                state.items[index] = { id, title, amount, category };
                 localStorage.setItem("expenses", JSON.stringify(state.items));
             }
           },
